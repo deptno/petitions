@@ -8,7 +8,7 @@
     "noEmit": true
   },
   "include": [
-    "src",
+    "packages/ptt-datalake/src",
     "__tests__"
   ]
 }
