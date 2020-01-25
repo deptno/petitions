@@ -10,6 +10,11 @@
     debug "^4.1.1"
     ramda "^0.26.1"
 
+"@types/node@^13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.5.0.tgz#4e498dbf355795a611a87ae5ef811a8660d42662"
+  integrity sha512-Onhn+z72D2O2Pb2ql2xukJ55rglumsVo1H6Fmyi8mlU9SvKdBk/pUSUAiBY/d9bAOF7VVWajX3sths/+g6ZiAQ==
+
 "@types/ramda@^0.26.40":
   version "0.26.40"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.40.tgz#4fbd3bd6a8583e2aa0830b8942fbace44ecd070a"
