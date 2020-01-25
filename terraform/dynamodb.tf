@@ -1,4 +1,4 @@
-resource aws_dynamodb_table aa {
+resource aws_dynamodb_table petitions {
   name = "${terraform.workspace}-petitions"
   hash_key = "hk"
   range_key = "rk"
