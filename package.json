@@ -1,21 +1,21 @@
 {
-  "name": "petitions",
+  "name": "petitions-workspace",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "tsnd --respawn src/index.ts",
+    "dev": "tsnd --respawn packages/ptt-datalake/src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ramda": "^0.26.40",
     "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44"
-  },
-  "dependencies": {
-    "domino": "^2.1.4",
-    "isomorphic-unfetch": "^3.0.0"
   }
 }

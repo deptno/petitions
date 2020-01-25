@@ -1,0 +1,11 @@
+{
+  "name": "@deptno/ptt-datalake",
+  "version": "0.0.0",
+  "dependencies": {
+    "@deptno/dynamodb": "^0.1.0",
+    "date-fns": "^2.9.0",
+    "domino": "^2.1.4",
+    "isomorphic-unfetch": "^3.0.0",
+    "ramda": "^0.26.1"
+  }
+}
