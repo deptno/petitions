@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-unfetch'
 import domino from 'domino'
-import {map, pipe, prop, remove, zipObj} from 'ramda'
+import {concat, converge, flatten, map, merge, pipe, prop, remove, zipObj} from 'ramda'
 import {parse} from 'date-fns'
+import {parse as parseUrl} from 'url'
+import {basename} from 'path'
 import {util} from '@deptno/dynamodb'
 
 async function main() {
@@ -14,11 +16,21 @@ async function main() {
   const date = new Date()
   const texts = elItems
     .map(
-      pipe(
-        prop('children'),
-        Array.from,
-        remove(3, 1),
-        map(getTextFromNode),
+      converge(
+        concat,
+        [
+          el => {
+            const {pathname} = parseUrl(el.querySelector('.bl_subject').firstElementChild.href)
+            return [basename(pathname!)]
+          },
+          pipe(
+            prop('children'),
+            Array.from,
+            remove(3, 1),
+            remove(0, 1),
+            map(getTextFromNode),
+          ),
+        ]
       )
     )
     .map(item =>
@@ -27,6 +39,7 @@ async function main() {
           case 2:
             return c.slice(3)
           case 3:
+            console.log(c)
             return parse(c, 'yy-MM-dd', date)
           case 4:
             return parseInt(
@@ -41,10 +54,10 @@ async function main() {
     )
     .map(
       pipe(
-        zipObj(['no', 'category', 'title', 'endDate', 'people']),
+        zipObj(['hk', 'category', 'title', 'endDate', 'people']),
         (item: any) => ({
           ...item,
-          ttl: util.ttl(item.endDate)
+          ttl: util.ttl(item.endDate),
         })
       )
     )
