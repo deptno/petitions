@@ -3,7 +3,7 @@ terraform {
     profile = "deptno"
     bucket = "deptno-tfstate"
     region = "ap-northeast-2"
-    key = "aa.tfstate"
+    key = "ptt.tfstate"
     encrypt = true
   }
 }
