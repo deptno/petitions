@@ -58,6 +58,7 @@ async function main() {
         (item: any) => ({
           ...item,
           ttl: util.ttl(item.endDate),
+          rk: 'raw'
         })
       )
     )

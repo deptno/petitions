@@ -5,9 +5,9 @@ resource aws_dynamodb_table aa {
   billing_mode = "PAY_PER_REQUEST"
 
   global_secondary_index {
-    name = "rkT"
+    name = "rkPeople"
     hash_key = "rk"
-    range_key = "t"
+    range_key = "people"
     projection_type = "ALL"
   }
 
@@ -23,5 +23,9 @@ resource aws_dynamodb_table aa {
   attribute {
     name = "rk"
     type = "S"
+  }
+  attribute {
+    name = "people"
+    type = "N"
   }
 }
