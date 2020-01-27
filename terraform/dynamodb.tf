@@ -4,7 +4,7 @@ resource aws_dynamodb_table petitions {
   range_key = "rk"
   billing_mode = "PROVISIONED"
   write_capacity = 1
-  read_capacity = 5
+  read_capacity = 1
 
   ttl {
     attribute_name = "ttl"
