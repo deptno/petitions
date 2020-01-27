@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "tsnd --respawn packages/ptt-datalake/src/index.ts",
+    "dev": "RUN=1 tsnd --respawn packages/ptt-datalake/handler/petitions.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
