@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - 'terraform/*'
+      - '.github/workflows/dev-terraform.yml'
 jobs:
   terraform:
     runs-on: ubuntu-latest
