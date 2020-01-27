@@ -10,6 +10,13 @@ resource aws_dynamodb_table petitions {
     attribute_name = "ttl"
     enabled        = true
   }
+  
+  global_secondary_index {
+    hash_key = "rk"
+    range_key = "no"
+    name = "rkNo"
+    projection_type = "ALL"
+  }
 
   attribute {
     name = "hk"
@@ -18,5 +25,9 @@ resource aws_dynamodb_table petitions {
   attribute {
     name = "rk"
     type = "S"
+  }
+  attribute {
+    name = "no"
+    type = "N"
   }
 }

@@ -13,6 +13,7 @@ export const createAccDocument = pipe(
       ttl,
       endDate: format(item.endDate, const_yyyyMMDdTHHMmxx),
       rk     : 'acc',
+      no     : item.hk,
     }
   }
 )
