@@ -54,7 +54,6 @@ functions:
   cronGetPetitionsTop15:
     description: "국민청원, 청원인 순 상위 15 청원을 크롤링"
     handler: cron/petitions.handler
-    memorySize: 256
     environment:
       TZ: Asia/Seoul
     events:
