@@ -60,4 +60,4 @@ functions:
       - schedule:
           name: ${opt:stage}-cron-ptt-top-15
           description: '국민 청원 데이터를 1분 마다 업데이트'
-          rate: cron(0/1 * * * ? *)
+          rate: cron(0/30 * * * ? *)
