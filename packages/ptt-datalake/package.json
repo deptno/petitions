@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "dependencies": {
     "@deptno/dynamodb": "^0.1.0",
+    "cross-fetch": "^3.0.4",
     "date-fns": "^2.9.0",
     "domino": "^2.1.4",
-    "isomorphic-unfetch": "^3.0.0",
     "ramda": "^0.26.1"
   }
 }
