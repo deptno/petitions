@@ -1,11 +1,11 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "target": "es2019",
+    "module": "commonjs",
+    "target": "esnext",
     "moduleResolution": "node",
     "inlineSourceMap": true,
     "esModuleInterop": true,
-    "strictNullChecks": true,
-    "jsx": "preserve",
-    "noEmit": true
+    "strictNullChecks": true
   }
 }
