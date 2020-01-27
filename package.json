@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "RUN=1 tsnd --respawn packages/ptt-datalake/cron/petitions.ts",
     "dev:package:datalake": "cd packages/ptt-datalake && sls package -s dev",
+    "dev:deploy:datalake": "cd packages/ptt-datalake && sls deploy -s dev",
     "test": "echo 'no test'"
   },
   "keywords": [],
