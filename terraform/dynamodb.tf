@@ -16,6 +16,8 @@ resource aws_dynamodb_table petitions {
     range_key = "no"
     name = "rkNo"
     projection_type = "ALL"
+    write_capacity = 1
+    read_capacity = 1
   }
 
   attribute {
