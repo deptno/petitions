@@ -4,13 +4,6 @@ resource aws_dynamodb_table petitions {
   range_key = "rk"
   billing_mode = "PAY_PER_REQUEST"
 
-  global_secondary_index {
-    name = "rkPeople"
-    hash_key = "rk"
-    range_key = "people"
-    projection_type = "ALL"
-  }
-
   ttl {
     attribute_name = "ttl"
     enabled        = true
@@ -18,7 +11,7 @@ resource aws_dynamodb_table petitions {
 
   attribute {
     name = "hk"
-    type = "S"
+    type = "N"
   }
   attribute {
     name = "rk"
