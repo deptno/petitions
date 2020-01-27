@@ -2,7 +2,9 @@ resource aws_dynamodb_table petitions {
   name = "${terraform.workspace}-petitions"
   hash_key = "hk"
   range_key = "rk"
-  billing_mode = "PAY_PER_REQUEST"
+  billing_mode = "PROVISIONED"
+  write_capacity = 1
+  read_capacity = 5
 
   ttl {
     attribute_name = "ttl"
@@ -16,9 +18,5 @@ resource aws_dynamodb_table petitions {
   attribute {
     name = "rk"
     type = "S"
-  }
-  attribute {
-    name = "people"
-    type = "N"
   }
 }
