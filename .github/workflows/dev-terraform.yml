@@ -23,6 +23,7 @@ jobs:
       - name: deploy development infrastructure
         run: |
           cd terraform
+          terraform --version
           terraform init
           terraform workspace select dev
           terraform plan -out=plan

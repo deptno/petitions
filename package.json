@@ -10,6 +10,7 @@
     "dev": "RUN=1 tsnd --respawn packages/ptt-datalake/cron/petitions.ts",
     "dev:package:datalake": "cd packages/ptt-datalake && sls package -s dev",
     "dev:deploy:datalake": "cd packages/ptt-datalake && sls deploy -s dev",
+    "dev:deploy:datalake.f": "cd packages/ptt-datalake && sls deploy -s dev -f cronGetPetitionsTop15",
     "test": "echo 'no test'"
   },
   "keywords": [],
