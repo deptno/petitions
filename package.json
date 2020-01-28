@@ -7,11 +7,18 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "RUN=1 tsnd --respawn packages/ptt-datalake/cron/petitions.ts",
+    "--------------------개발": "#",
+    "next": "cd packages/ptt_frontend && AWS_PROFILE=deptno next",
+    "cron:petitions": "RUN=1 tsnd --respawn packages/ptt-datalake/cron/petitions.ts",
+    "--------------------빌드": "#",
     "dev:package:datalake": "cd packages/ptt-datalake && sls package -s dev",
     "dev:deploy:datalake": "cd packages/ptt-datalake && sls deploy -s dev",
     "dev:deploy:datalake.f": "cd packages/ptt-datalake && sls deploy -s dev -f cronGetPetitionsTop15",
-    "test": "echo 'no test'"
+    "--------------------테스트": "#",
+    "test": "echo 'no test'",
+    "--------------------기타": "#",
+    "ws:remove:serverless-webpack": "yarn remove serverless-webpack -W",
+    "ws:add:serverless-webpack": "yarn add serverless-webpack -D -W"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +31,7 @@
     "@types/aws-lambda": "^8.10.40",
     "@types/node": "^13.5.0",
     "@types/ramda": "^0.26.40",
+    "@types/react": "^16.9.19",
     "babel-loader": "^8.0.6",
     "serverless": "^1.61.3",
     "serverless-jetpack": "^0.8.1",
