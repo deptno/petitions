@@ -1,11 +1,37 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
 import fetch from 'cross-fetch'
+import {useEffect} from 'react'
+
+declare const Chart
 
 export const DetailPage: NextPage<Props> = props => {
   const {no, items} = props
 
-  console.table(items)
+  useEffect(() => {
+    const ctx = (document.getElementById('chart') as any).getContext('2d')
+    const chart = new Chart(ctx, {
+      type   : 'bar',
+      data   : {
+        labels  : items.map(t => t.rk.slice(3)),
+        datasets: [{
+          label: `#${no} 청원자 수`,
+          data : items.map(t => t.people),
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    })
+  }, [])
+
   return (
     <div>
       <Head>
@@ -23,18 +49,20 @@ export const DetailPage: NextPage<Props> = props => {
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"
         />
+        <script
+          type="application/javascript"
+          src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
+        />
       </Head>
       <h1>
         청원 번호: #{no}
       </h1>
-      <ul className="list">
-        {items.length}
-      </ul>
+      <canvas id="chart" width="400" height="400"/>
     </div>
   )
 }
 DetailPage.getInitialProps = async (ctx) => {
-  const {no} = ctx.query as {[key: string]: string}
+  const {no} = ctx.query as { [key: string]: string }
   const items = await fetch(`http://localhost:3000/api/chart/${no}`).then(response => response.json())
 
   return {
