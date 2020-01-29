@@ -1,5 +1,5 @@
 {
-  "name": "@deptno/ptt-datalake",
+  "name": "@deptno/ptt_datalake",
   "version": "0.0.0",
   "dependencies": {
     "@deptno/dynamodb": "^0.1.0",

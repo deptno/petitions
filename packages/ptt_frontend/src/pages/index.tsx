@@ -7,7 +7,7 @@ export const IndexPage: NextPage<Props> = props => {
   const {items} = props
 
   return (
-    <div>
+    <div className="pa3">
       <Head>
         <meta
           name="viewport"
@@ -27,16 +27,17 @@ export const IndexPage: NextPage<Props> = props => {
       <h1>
         국민 청원
       </h1>
-      <ul className="list">
-        {items.map(t => {
+      <ul className="list pl0">
+        {items.map((t, i) => {
           return (
             <Link href="detail/[no]" as={`detail/${t.hk}`} key={t.hk}>
-              <a>
+              <a className="link black-70">
                 <li className="flex">
-                  <span className="w4 dib">{t.category}</span>
-                  <span className="w4 dib">{t.people}명</span>
-                  <span className="dib">{t.title}</span>
-                  <span className="ml-auto dib">{t.endDate}</span>
+                  <span className="w3">#{(i+1).toString().padStart(2, '0')}</span>
+                  <span className="w4">{t.endDate}</span>
+                  <span className="w4">{t.category}</span>
+                  <span className="w4">{t.people}명</span>
+                  <span className="flex-auto">{t.title}</span>
                 </li>
               </a>
             </Link>
