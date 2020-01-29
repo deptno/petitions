@@ -30,11 +30,10 @@ export const DetailPage: NextPage<Props> = props => {
         }
       })
       const chart = new Chart(ctx, {
-        type   : 'bar',
         data   : {
           datasets: [
             {
-              label          : '청원수',
+              label          : '✋',
               data           : data.map((x, i, array) => {
                 return {
                   x: x.x,
@@ -52,16 +51,17 @@ export const DetailPage: NextPage<Props> = props => {
         },
         options: {
           animation: {
-            duration: 0
+            duration: 3000
           },
           scales   : {
             xAxes: [{
               type           : 'time',
               distribution   : 'series',
-              time: {
+              time           : {
+                tooltipFormat : 'MM/DD HH:mm',
                 displayFormats: {
-                  hour:	'HH:mm',
-                  day:	'MM-DD'
+                  hour: 'HH:mm',
+                  day : 'MM/DD'
                 }
               },
               offset         : true,
@@ -102,7 +102,6 @@ export const DetailPage: NextPage<Props> = props => {
                     lastMajor = currMajor
                   }
                 }
-                console.table(ticks)
                 return ticks
               }
             }],
@@ -115,12 +114,13 @@ export const DetailPage: NextPage<Props> = props => {
               }
             }]
           },
-          legend: {
+          legend   : {
             display: false
           },
           tooltips : {
-            intersect: true,
+            intersect: false,
             mode     : 'index',
+
             callbacks: {
               label: function (tooltipItem, myData) {
                 var label = myData.datasets[tooltipItem.datasetIndex].label || ''
