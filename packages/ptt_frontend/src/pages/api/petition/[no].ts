@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {ddb} from '../../../backend/dynamodb'
+import {format, parse} from 'date-fns'
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   const {no} = req.query
@@ -12,9 +13,15 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         'rk': 'acc'
       }
     })
-    .then(response => {
+    .then((response: any) => {
       res
         .status(200)
-        .send(response)
+        .send({
+          ...response,
+          endDate: format(
+            parse(response.endDate, 'yyyy-MM-dd\'T\'HH:mmxx', new Date()),
+            'yyyy년 MM월 dd일'
+          )
+        })
     })
 }

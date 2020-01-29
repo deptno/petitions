@@ -7,7 +7,7 @@ import {Script} from 'react-script-fall'
 declare const Chart, moment
 
 export const DetailPage: NextPage<Props> = props => {
-  const {no, title, items} = props
+  const {no, title, people, endDate, items} = props
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -155,11 +155,18 @@ export const DetailPage: NextPage<Props> = props => {
           href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"
         />
       </Head>
-      <h1>
+      <h1 className="f4">
         #{no} {title}
       </h1>
-      <div className="w-50">
-        <canvas id="chart" width="1024" height="300"/>
+      <a className="link ph2 pv1 ba br2 hot-pink" target="_blank" href={`https://www1.president.go.kr/petitions/${no}`}>
+        🏃🏻‍♀️ 청원페이지로 ⇥
+      </a>
+      <p className="flex flex-column">
+        <span>🙋🏻‍♀️ {Intl.NumberFormat('ko-KR').format(people)} 명</span>
+        <span>⏳ {endDate}</span>
+      </p>
+      <div className="w-100">
+        <canvas id="chart" width="400" height="600"/>
       </div>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
@@ -171,13 +178,15 @@ export const DetailPage: NextPage<Props> = props => {
 }
 DetailPage.getInitialProps = async (ctx) => {
   const {no} = ctx.query as { [key: string]: string }
-  const {title} = await fetch(`http://localhost:3000/api/petition/${no}`).then(response => response.json())
+  const {title, people, endDate} = await fetch(`http://localhost:3000/api/petition/${no}`).then(response => response.json())
   const items = await fetch(`http://localhost:3000/api/chart/${no}`).then(response => response.json())
 
   return {
     items,
     no,
-    title
+    title,
+    people,
+    endDate
   }
 }
 export default DetailPage
@@ -191,4 +200,6 @@ type Props = {
   }[]
   no: string
   title: string
+  people: number
+  endDate: String
 }
