@@ -1,0 +1,25 @@
+schema {
+  query: Query
+}
+type Query {
+  petitions: [Petition!]!
+  petition(id: Int!): Petition
+  chart(petitionId: Int!): [PetitionTick]!
+}
+type Petition {
+  no: Int!
+  hk: Int!
+  endDate: String!
+  category: String!
+  people: Int!
+  ttl: Int!
+  rk: String!
+  title: String!
+}
+type PetitionTick {
+  hk: Int!
+  rk: String!
+  people: Int!
+  ttl: Int!
+}
+type PetitionChart
