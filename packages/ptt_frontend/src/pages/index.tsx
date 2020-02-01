@@ -1,7 +1,7 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import fetch from 'cross-fetch'
+import {graphql} from '../lib/graphql'
 
 export const IndexPage: NextPage<Props> = props => {
   const {items} = props
@@ -30,7 +30,7 @@ export const IndexPage: NextPage<Props> = props => {
       <ul className="list pl0">
         {items.map((t, i) => {
           return (
-            <Link href="detail/[no]" as={`detail/${t.hk}`} key={t.hk}>
+            <Link href="detail/[no]" as={`detail/${t.no}`} key={t.no}>
               <a className="link black-70">
                 <li className="flex">
                   <span className="w3">#{(i+1).toString().padStart(2, '0')}</span>
@@ -48,11 +48,22 @@ export const IndexPage: NextPage<Props> = props => {
   )
 }
 IndexPage.getInitialProps = async (ctx) => {
-  const items = await fetch('http://localhost:3000/api').then(response => response.json())
-  console.table(items)
+  const {petitions} = await graphql(/* language=graphql */ `
+    query {
+      petitions {
+        category
+        endDate
+        no
+        title
+        people
+      }
+    }
+  `)
+  console.log(petitions)
+  console.table(petitions)
 
   return {
-    items
+    items: petitions
   }
 }
 export default IndexPage

@@ -1,5 +1,5 @@
 import {APIGatewayProxyEvent} from 'aws-lambda'
-import {Context} from '@deptno/aa_graphql_type'
+import {Context} from '@deptno/ptt_graphql'
 
 export const context = (e): Omit<Context, 'dataSources'> => {
   const {req, event, context} = e

@@ -3,6 +3,7 @@ import Head from 'next/head'
 import fetch from 'cross-fetch'
 import {useEffect, useState} from 'react'
 import {Script} from 'react-script-fall'
+import {graphql} from '../../lib/graphql'
 
 declare const Chart, moment
 
@@ -165,8 +166,8 @@ export const DetailPage: NextPage<Props> = props => {
         <span>🙋🏻‍♀️ {Intl.NumberFormat('ko-KR').format(people)} 명</span>
         <span>⏳ {endDate}</span>
       </p>
-      <div className="w-100">
-        <canvas id="chart" width="400" height="600"/>
+      <div className="">
+        <canvas id="chart" width="400" height="400"/>
       </div>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
@@ -178,8 +179,23 @@ export const DetailPage: NextPage<Props> = props => {
 }
 DetailPage.getInitialProps = async (ctx) => {
   const {no} = ctx.query as { [key: string]: string }
-  const {title, people, endDate} = await fetch(`http://localhost:3000/api/petition/${no}`).then(response => response.json())
-  const items = await fetch(`http://localhost:3000/api/chart/${no}`).then(response => response.json())
+  const {petition: {title, people, endDate}, chart: items} = await graphql(/* language=graphql */ `
+    query ($no: Int!){
+      petition(id: $no) {
+        category
+        endDate
+        no
+        title
+        people
+      }
+      chart(petitionId: $no) {
+        hk
+        rk
+        people
+        ttl
+      }
+    }
+  `, {no: Number(no)})
 
   return {
     items,

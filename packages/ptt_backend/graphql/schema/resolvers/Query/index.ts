@@ -1,8 +1,10 @@
-import {env} from './env'
-import {aa} from './aa'
-import {QueryResolvers} from '@deptno/aa_graphql_type'
+import {petitions} from './petitions'
+import {petition} from './petition'
+import {chart} from './chart'
+import {QueryResolvers} from '@deptno/ptt_graphql'
 
 export const Query: QueryResolvers = {
-  env,
-  aa,
+  petitions,
+  petition,
+  chart,
 }

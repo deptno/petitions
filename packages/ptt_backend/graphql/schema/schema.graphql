@@ -22,4 +22,3 @@ type PetitionTick {
   people: Int!
   ttl: Int!
 }
-type PetitionChart

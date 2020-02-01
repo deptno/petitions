@@ -1,23 +1,21 @@
-import {PetitionsDataSourceInterface} from '@deptno/ptt_graphql'
+import {Petition, PetitionsDataSourceInterface, PetitionTick} from '@deptno/ptt_graphql'
 import {DataSource} from 'apollo-datasource'
 import {createDynamoDB} from '@deptno/dynamodb'
 import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client'
 import {format, parse} from 'date-fns'
 
 export class PetitionsDataSource extends DataSource implements PetitionsDataSourceInterface {
-  #ddb: ReturnType<typeof createDynamoDB>
-  #tableName: string
+  private ddb: ReturnType<typeof createDynamoDB>
 
-  constructor(documentClient: DocumentClient, tableName: string) {
+  constructor(documentClient: DocumentClient, private tableName: string) {
     super()
 
-    this.#ddb = createDynamoDB(documentClient)
-    this.#tableName = tableName
+    this.ddb = createDynamoDB(documentClient)
   }
 
   async petitions() {
-    return this.#ddb
-      .query({
+    return this.ddb
+      .query<Petition>({
         TableName: 'dev-petitions',
         IndexName: 'rkNo',
         KeyConditionExpression: '#h = :h',
@@ -29,7 +27,7 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
         },
       })
       .then(response => {
-        response.items
+        return response.items
           .map((t: any) => {
             return {
               ...t,
@@ -46,8 +44,8 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
   }
 
   async petition(id: number) {
-    return this.#ddb
-      .get({
+    return this.ddb
+      .get<Petition>({
         TableName: 'dev-petitions',
         Key: {
           'hk': id,
@@ -66,8 +64,8 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
   }
 
   async chart(petitionId: number) {
-    return this.#ddb
-      .query({
+    return this.ddb
+      .query<PetitionTick>({
         TableName: 'dev-petitions',
         KeyConditionExpression: '#h = :h AND begins_with(#r, :r)',
         ExpressionAttributeNames: {
