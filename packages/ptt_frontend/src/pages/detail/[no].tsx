@@ -5,13 +5,22 @@ import {graphql} from '../../lib/graphql'
 import {ChangeChart} from '../../component/ChangeChart'
 import {useState} from 'react'
 import {Footer} from '../../component/Footer'
+import {AccChart} from '../../component/AccChart'
+import Link from 'next/link'
 
 export const DetailPage: NextPage<Props> = props => {
   const [chartLoaded, setChartLoaded] = useState(false)
   const {no, title, people, remains, endDate, items} = props
 
   return (
-    <div className="pa3">
+    <div className="pa3 page ml-auto mr-auto">
+      <style jsx>
+        {/* language=css */ `
+          .page {
+            max-width: 976px;
+          }
+        `}
+      </style>
       <Head>
         <meta
           name="viewport"
@@ -40,20 +49,33 @@ export const DetailPage: NextPage<Props> = props => {
       <h1>
         {title}
       </h1>
-      <p className="mv4">
-        <a className="link ph2 pv1 ba blue" target="_blank" href={`https://www1.president.go.kr/petitions/${no}`}>
-          청원 페이지로 ⇥
-        </a>
-      </p>
       <p className="flex flex-column w-100">
         <span>🙋🏻‍♀️ {people} 명</span>
         <span className="red">⏳ {remains} 남음<span className="black-70">({endDate})</span></span>
       </p>
       {chartLoaded && (
-        <>
-          <ChangeChart items={items}/>
-        </>
+        <div className="flex flex-column">
+          <div>
+            <h5 className="mv3">변화율</h5>
+            <ChangeChart items={items}/>
+          </div>
+          <div>
+            <h5 className="mv3">누적</h5>
+            <AccChart items={items}/>
+          </div>
+        </div>
       )}
+      <p className="flex flex-column items-end mv4 tc">
+        <a className="w4-ns w-50 link ph2 pv1 ba black-70" target="_blank"
+           href={`https://www1.president.go.kr/petitions/${no}`}>
+          청원 페이지로 ⇥
+        </a>
+        <Link href="/">
+          <a className="w4-ns w-50 link ph2 pv1 ba black-70 mt1">
+            목록
+          </a>
+        </Link>
+      </p>
       <Footer/>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
