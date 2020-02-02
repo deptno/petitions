@@ -57,7 +57,7 @@ export const IndexPage: NextPage<{}> = props => {
         <ul className="list pl0">
           {petitions.map((t, i) => {
             return (
-              <Link href="/detail/[no]" as={`detail/${t.no}`} key={t.no}>
+              <Link href="/detail/[no]" as={`/detail/${t.no}`} key={t.no}>
                 <a className="link black-70">
                   <li className="flex flex-column mv2 pa2 w-100 hover-bg-gold">
                     <p className="flex justify-between mv0 black-70 f6">
