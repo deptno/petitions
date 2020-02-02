@@ -1,14 +1,16 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
 import {Script} from 'react-script-fall'
-import {graphql} from '../../lib/graphql'
-import {ChangeChart} from '../../component/ChangeChart'
-import {useEffect, useState} from 'react'
-import {Header} from '../../component/Header'
-import {AccChart} from '../../component/AccChart'
+import {graphql} from '../../../lib/graphql'
+import {ChangeChart} from '../../../component/ChangeChart'
+import React, {useEffect, useState} from 'react'
+import {Header} from '../../../component/Header'
+import {AccChart} from '../../../component/AccChart'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {PetitionTick} from '@deptno/ptt_graphql'
+import {Footer} from '../../../component/Footer'
+import {NextSeo} from 'next-seo'
 
 export const DetailPage: NextPage<{}> = props => {
   const [chartLoaded, setChartLoaded] = useState(false)
@@ -51,6 +53,25 @@ export const DetailPage: NextPage<{}> = props => {
 
   return (
     <div className="page ml-auto mr-auto">
+      <NextSeo
+        title="Using More of Config"
+        description="This example uses more of the available config options."
+        canonical="https://www.canonical.ie/"
+        openGraph={{
+          url: 'https://deptno.github.io/',
+          title: '청와대 국민청원 차트',
+          description: '청와대 국민청원 순위 차트, 그래프',
+          images: [
+            { url: 'https://deptno.github.io/petitions/logo.png' },
+          ],
+          site_name: '청와대 국민청원 차트',
+        }}
+        twitter={{
+          handle: '@deptno',
+          site: '@deptno',
+          cardType: 'summary_large_image',
+        }}
+      />
       <style jsx>
         {/* language=css */ `
             .page {
@@ -75,8 +96,8 @@ export const DetailPage: NextPage<{}> = props => {
         />
       </Head>
       <Header/>
-      <div className="ph3">
-        <h1>
+      <div className="ph3 black-70">
+        <h1 className="f3">
           {title}
         </h1>
         <p className="flex flex-column w-100">
@@ -107,6 +128,7 @@ export const DetailPage: NextPage<{}> = props => {
           </Link>
         </p>
       </div>
+      <Footer />
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" onLoad={setChartLoaded} />
       </Script>

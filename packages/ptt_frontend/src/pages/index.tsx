@@ -5,6 +5,7 @@ import {graphql} from '../lib/graphql'
 import {Header} from '../component/Header'
 import {useEffect, useState} from 'react'
 import {Petition} from '@deptno/ptt_graphql'
+import {Footer} from '../component/Footer'
 
 export const IndexPage: NextPage<{}> = props => {
   const [petitions, setPetitions] = useState<Data>([])
@@ -52,21 +53,20 @@ export const IndexPage: NextPage<{}> = props => {
       </Head>
       <Header/>
       <div className="ph3">
-        <h1>
-          국민 청원
-        </h1>
         <ul className="list pl0">
           {petitions.map((t, i) => {
             return (
-              <Link href="/detail/[no]" as={`/detail/${t.no}`} key={t.no}>
+              <Link href="/petitions/detail/[no]" as={`/petitions/detail/${t.no}`} key={t.no}>
                 <a className="link black-70">
-                  <li className="flex flex-column mv2 pa2 w-100 hover-bg-gold">
+                  <li className="flex flex-column mv2 pa2 w-100 hover-bg-gold bl bw1 b--black-05">
                     <p className="flex justify-between mv0 black-70 f6">
+                      <span className="w3">
+                      <span className="tc ph1 bg-gold">{t.category}</span>
+                      </span>
                       <span className="w4 light-red">{t.remains} 남음</span>
-                      <span className="w3 tc">{t.category}</span>
-                      <span className="w4 tr underline">{t.people} 명</span>
+                      <span className="w4 ml-auto tr underline">{t.people} 명</span>
                     </p>
-                    <p className="mv0 pv1 black">
+                    <p className="mv0 pv1 black-70">
                       <span className="flex-auto">{t.title}</span>
                     </p>
                   </li>
@@ -76,6 +76,7 @@ export const IndexPage: NextPage<{}> = props => {
           })}
         </ul>
       </div>
+      <Footer/>
     </div>
   )
 }

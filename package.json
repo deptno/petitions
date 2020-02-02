@@ -10,7 +10,6 @@
     "--------------------개발": "#",
     "next": "cd packages/ptt_frontend && AWS_PROFILE=deptno next",
     "graphql": "AWS_PROFILE=deptno tsnd packages/ptt_backend/handler/graphql.local.ts",
-    "cron:petitions": "RUN=1 tsnd --respawn packages/ptt_datalake/cron/petitions.ts",
     "--------------------빌드": "#",
     "build": "yarn build:graphql",
     "build:graphql": "graphql-codegen --config codegen.yml",
