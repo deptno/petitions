@@ -108,9 +108,7 @@ export const DetailPage: NextPage<{}> = props => {
         </p>
       </div>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
-        <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
-          <Script src="/chartjs-chart-financial.min.js" onLoad={setChartLoaded}/>
-        </Script>
+        <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" onLoad={setChartLoaded} />
       </Script>
     </div>
   )
