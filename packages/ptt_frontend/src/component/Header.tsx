@@ -7,7 +7,8 @@ export const Header: FunctionComponent<Props> = props => {
       <Link href="/" passHref>
         <a className="link black-70">
           <figure className="ma0 flex items-center">
-            <img className="" src="/logo.png" width="40" height="40"/>
+            {/* todo: assetPrefix 버그 있음 */}
+            <img src="https://deptno.github.io/petitions/logo.png" width="40" height="40"/>
             <p className="ma0 f5 mh3">청와대 국민청원</p>
           </figure>
         </a>

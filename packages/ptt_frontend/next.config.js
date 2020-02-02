@@ -1,9 +1,11 @@
-const [_, assetPrefix = ''] = (process.env.GITHUB_REPOSITORY || '').split('/')
+const [_, repository = ''] = (process.env.GITHUB_REPOSITORY || '').split('/')
 const config = {
-  env: {
+  env        : {
     PTT_GRAPHQL_URL: process.env.PTT_GRAPHQL_URL || 'http://localhost:4000',
   },
-  assetPrefix: `/${assetPrefix}`
+  assetPrefix: repository
+    ? `/${repository}`
+    : ''
 }
 
 console.log('build config:', config)

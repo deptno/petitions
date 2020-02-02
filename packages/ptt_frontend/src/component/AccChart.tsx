@@ -39,9 +39,9 @@ export const AccChart: FunctionComponent<Props> = props => {
               time        : {
                 tooltipFormat : 'MM/DD HH:mm',
                 displayFormats: {
-                  month: '📆 MM/DD',
+                  month: '📆 M월',
                   hour : 'HH:mm',
-                  day  : 'MM/DD'
+                  day  : 'DD'
                 }
               },
               offset      : true,
