@@ -1,0 +1,35 @@
+name: deploy-backend
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'CHANGELOG.backend.md'
+      - '.github/workflows/deploy-backend.yml'
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: set credentials
+        run: |
+          aws configure set region ap-northeast-2
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws --profile deptno configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws --profile deptno configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+          - uses: actions/cache@v1
+            with:
+              path: ${{ steps.yarn-cache.outputs.dir }}
+              key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+              restore-keys: |
+                ${{ runner.os }}-yarn-
+      - run: yarn
+      - run: yarn test
+      - run: yarn dev:deploy:backend
