@@ -88,11 +88,6 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
       })
       .then(response => {
         return response.items.map<PetitionTick>(t => {
-          console.log({
-            no: t.hk,
-            people: t.people,
-            at: new Date(t.rk.slice(3)),
-          })
           return {
             no: t.hk,
             people: t.people,

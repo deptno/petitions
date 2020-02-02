@@ -113,8 +113,6 @@ export const ChangeChart: FunctionComponent<Props> = props => {
   useEffect(() => {
     if (chart) {
       if (items.length > 0) {
-        alert(JSON.stringify(items[0], null, 2))
-        alert(JSON.stringify(createChartData(items)[0], null, 2))
         chart.data.datasets[0].data = createChartData(items)
         chart.update()
       }
