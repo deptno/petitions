@@ -1,142 +1,14 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
-import fetch from 'cross-fetch'
-import {useEffect, useState} from 'react'
 import {Script} from 'react-script-fall'
 import {graphql} from '../../lib/graphql'
-
-declare const Chart, moment
+import {ChangeChart} from '../../component/ChangeChart'
+import {useState} from 'react'
+import {Footer} from '../../component/Footer'
 
 export const DetailPage: NextPage<Props> = props => {
-  const {no, title, people, endDate, items} = props
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
-    if (ready) {
-      const ctx = (document.getElementById('chart') as any).getContext('2d')
-      const chartColors = {
-        red   : 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green : 'rgb(75, 192, 192)',
-        blue  : 'rgb(54, 162, 235)',
-        purple: 'rgb(153, 102, 255)',
-        grey  : 'rgb(201, 203, 207)',
-      }
-      const color = Chart.helpers.color
-      const data = items.map(t => {
-        return {
-          y: t.people,
-          x: new Date(t.rk.slice(3))
-        }
-      })
-      const chart = new Chart(ctx, {
-        data   : {
-          datasets: [
-            {
-              label          : '✋',
-              data           : data.map((x, i, array) => {
-                return {
-                  x: x.x,
-                  y: (x.y - ((array[i - 1]?.y) || x.y)),
-                }
-              }).slice(1),
-              backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
-              borderColor    : chartColors.red,
-              type           : 'bar',
-              pointRadius    : 0,
-              fill           : false,
-              lineTension    : 0,
-              borderWidth    : 2
-            }]
-        },
-        options: {
-          animation: {
-            duration: 3000
-          },
-          scales   : {
-            xAxes: [{
-              type           : 'time',
-              distribution   : 'series',
-              time           : {
-                tooltipFormat : 'MM/DD HH:mm',
-                displayFormats: {
-                  hour: 'HH:mm',
-                  day : 'MM/DD'
-                }
-              },
-              offset         : true,
-              ticks          : {
-                major          : {
-                  enabled  : true,
-                  fontStyle: 'bold'
-                },
-                source         : 'data',
-                autoSkip       : true,
-                autoSkipPadding: 75,
-                maxRotation    : 0,
-                sampleSize     : 100
-              },
-              afterBuildTicks: function (scale, ticks) {
-                let majorUnit = scale._majorUnit
-                if (ticks) {
-                  let firstTick = ticks[0]
-                  let i, ilen, val, tick, currMajor, lastMajor
-
-                  val = moment(ticks[0].value)
-                  if ((majorUnit === 'minute' && val.second() === 0)
-                    || (majorUnit === 'hour' && val.minute() === 0)
-                    || (majorUnit === 'day' && val.hour() === 9)
-                    || (majorUnit === 'month' && val.date() <= 3 && val.isoWeekday() === 1)
-                    || (majorUnit === 'year' && val.month() === 0)) {
-                    firstTick.major = true
-                  } else {
-                    firstTick.major = false
-                  }
-                  lastMajor = val.get(majorUnit)
-
-                  for (i = 1, ilen = ticks.length; i < ilen; i++) {
-                    tick = ticks[i]
-                    val = moment(tick.value)
-                    currMajor = val.get(majorUnit)
-                    tick.major = currMajor !== lastMajor
-                    lastMajor = currMajor
-                  }
-                }
-                return ticks
-              }
-            }],
-            yAxes: [{
-              gridLines : {
-                drawBorder: false
-              },
-              scaleLabel: {
-                labelString: '청원수'
-              }
-            }]
-          },
-          legend   : {
-            display: false
-          },
-          tooltips : {
-            intersect: false,
-            mode     : 'index',
-
-            callbacks: {
-              label: function (tooltipItem, myData) {
-                var label = myData.datasets[tooltipItem.datasetIndex].label || ''
-                if (label) {
-                  label += ': '
-                }
-                label += parseFloat(tooltipItem.value)
-                return label
-              }
-            }
-          }
-        }
-      })
-    }
-  }, [ready])
+  const [chartLoaded, setChartLoaded] = useState(false)
+  const {no, title, people, remains, endDate, items} = props
 
   return (
     <div className="pa3">
@@ -156,22 +28,36 @@ export const DetailPage: NextPage<Props> = props => {
           href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"
         />
       </Head>
-      <h1 className="f4">
-        #{no} {title}
-      </h1>
-      <a className="link ph2 pv1 ba br2 hot-pink" target="_blank" href={`https://www1.president.go.kr/petitions/${no}`}>
-        🏃🏻‍♀️ 청원페이지로 ⇥
-      </a>
-      <p className="flex flex-column">
-        <span>🙋🏻‍♀️ {Intl.NumberFormat('ko-KR').format(people)} 명</span>
-        <span>⏳ {endDate}</span>
-      </p>
-      <div className="">
-        <canvas id="chart" width="400" height="400"/>
+      <div>
       </div>
+      <div className="bg-washed-red pv1 lh-copy black-70">
+        <a className="link " href="/">
+          <span className="ph2 pv1 mh2">/</span>
+        </a>
+        >
+        <span className="ph2 pv1 mh2 black">#{no}</span>
+      </div>
+      <h1>
+        {title}
+      </h1>
+      <p className="mv4">
+        <a className="link ph2 pv1 ba blue" target="_blank" href={`https://www1.president.go.kr/petitions/${no}`}>
+          청원 페이지로 ⇥
+        </a>
+      </p>
+      <p className="flex flex-column w-100">
+        <span>🙋🏻‍♀️ {people} 명</span>
+        <span className="red">⏳ {remains} 남음<span className="black-70">({endDate})</span></span>
+      </p>
+      {chartLoaded && (
+        <>
+          <ChangeChart items={items}/>
+        </>
+      )}
+      <Footer/>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
-          <Script src="/chartjs-chart-financial.min.js" onLoad={setReady}/>
+          <Script src="/chartjs-chart-financial.min.js" onLoad={setChartLoaded}/>
         </Script>
       </Script>
     </div>
@@ -179,10 +65,11 @@ export const DetailPage: NextPage<Props> = props => {
 }
 DetailPage.getInitialProps = async (ctx) => {
   const {no} = ctx.query as { [key: string]: string }
-  const {petition: {title, people, endDate}, chart: items} = await graphql(/* language=graphql */ `
+  const {petition: {title, people, remains, endDate}, chart: items} = await graphql(/* language=graphql */ `
     query ($no: Int!){
       petition(id: $no) {
         category
+        remains
         endDate
         no
         title
@@ -202,6 +89,7 @@ DetailPage.getInitialProps = async (ctx) => {
     no,
     title,
     people,
+    remains,
     endDate
   }
 }
@@ -217,5 +105,6 @@ type Props = {
   no: string
   title: string
   people: number
+  remains: string
   endDate: String
 }

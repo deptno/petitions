@@ -10,8 +10,9 @@ type Petition {
   no: Int!
   hk: Int!
   endDate: String!
+  remains: String!
   category: String!
-  people: Int!
+  people: String!
   ttl: Int!
   rk: String!
   title: String!
