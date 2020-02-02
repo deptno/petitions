@@ -4,7 +4,7 @@ import {Script} from 'react-script-fall'
 import {graphql} from '../../lib/graphql'
 import {ChangeChart} from '../../component/ChangeChart'
 import {useState} from 'react'
-import {Footer} from '../../component/Footer'
+import {Header} from '../../component/Header'
 import {AccChart} from '../../component/AccChart'
 import Link from 'next/link'
 
@@ -13,12 +13,12 @@ export const DetailPage: NextPage<Props> = props => {
   const {no, title, people, remains, endDate, items} = props
 
   return (
-    <div className="pa3 page ml-auto mr-auto">
+    <div className="page ml-auto mr-auto">
       <style jsx>
         {/* language=css */ `
-          .page {
-            max-width: 976px;
-          }
+            .page {
+                max-width: 976px;
+            }
         `}
       </style>
       <Head>
@@ -37,46 +37,39 @@ export const DetailPage: NextPage<Props> = props => {
           href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"
         />
       </Head>
-      <div>
-      </div>
-      <div className="bg-washed-red pv1 lh-copy black-70">
-        <a className="link " href="/">
-          <span className="ph2 pv1 mh2">/</span>
-        </a>
-        >
-        <span className="ph2 pv1 mh2 black">#{no}</span>
-      </div>
-      <h1>
-        {title}
-      </h1>
-      <p className="flex flex-column w-100">
-        <span>🙋🏻‍♀️ {people} 명</span>
-        <span className="red">⏳ {remains} 남음<span className="black-70">({endDate})</span></span>
-      </p>
-      {chartLoaded && (
-        <div className="flex flex-column">
-          <div>
-            <h5 className="mv3">변화율</h5>
-            <ChangeChart items={items}/>
+      <Header/>
+      <div className="ph3">
+        <h1>
+          {title}
+        </h1>
+        <p className="flex flex-column w-100">
+          <span>🙋🏻‍♀️ {people} 명</span>
+          <span className="red">⏳ {remains} 남음<span className="black-70">({endDate})</span></span>
+        </p>
+        {chartLoaded && (
+          <div className="flex flex-column">
+            <div>
+              <h5 className="mv3">변화율</h5>
+              <ChangeChart items={items}/>
+            </div>
+            <div>
+              <h5 className="mv3">누적</h5>
+              <AccChart items={items}/>
+            </div>
           </div>
-          <div>
-            <h5 className="mv3">누적</h5>
-            <AccChart items={items}/>
-          </div>
-        </div>
-      )}
-      <p className="flex flex-column items-end mv4 tc">
-        <a className="w4-ns w-50 link ph2 pv1 ba black-70" target="_blank"
-           href={`https://www1.president.go.kr/petitions/${no}`}>
-          청원 페이지로 ⇥
-        </a>
-        <Link href="/">
-          <a className="w4-ns w-50 link ph2 pv1 ba black-70 mt1">
-            목록
+        )}
+        <p className="flex flex-column items-end mv4 tc">
+          <a className="w4-ns w-50 link ph2 pv1 ba black-70" target="_blank"
+             href={`https://www1.president.go.kr/petitions/${no}`}>
+            청원 페이지로 ⇥
           </a>
-        </Link>
-      </p>
-      <Footer/>
+          <Link href="/">
+            <a className="w4-ns w-50 link ph2 pv1 ba black-70 mt1">
+              목록
+            </a>
+          </Link>
+        </p>
+      </div>
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">
         <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">
           <Script src="/chartjs-chart-financial.min.js" onLoad={setChartLoaded}/>
