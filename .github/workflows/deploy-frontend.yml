@@ -43,4 +43,4 @@ jobs:
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./packages/aa_frontend/out
+          PUBLISH_DIR: ./packages/ptt_frontend/out
