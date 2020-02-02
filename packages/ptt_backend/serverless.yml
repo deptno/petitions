@@ -55,7 +55,7 @@ functions:
     description: petitions GraphQL
     handler: handler/graphql.handler
     environment:
-      - TZ: Asia/Seoul
+      TZ: Asia/Seoul
     events:
       - http:
           path: /graphql

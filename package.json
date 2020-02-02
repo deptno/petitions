@@ -16,6 +16,7 @@
     "build:graphql": "graphql-codegen --config codegen.yml",
     "dev:package:backend": "cd packages/ptt_backend && sls package -s dev",
     "dev:package:datalake": "cd packages/ptt_datalake && sls package -s dev",
+    "dev:deploy:backend": "cd packages/ptt_bakcend && sls deploy -s dev",
     "dev:deploy:datalake": "cd packages/ptt_datalake && sls deploy -s dev",
     "dev:deploy:datalake.f": "cd packages/ptt_datalake && sls deploy -s dev -f cronGetPetitionsTop15",
     "--------------------테스트": "#",
