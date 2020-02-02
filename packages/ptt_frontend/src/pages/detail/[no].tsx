@@ -8,6 +8,7 @@ import {Header} from '../../component/Header'
 import {AccChart} from '../../component/AccChart'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
+import {PetitionTick} from '@deptno/ptt_graphql'
 
 export const DetailPage: NextPage<{}> = props => {
   const [chartLoaded, setChartLoaded] = useState(false)
@@ -34,10 +35,9 @@ export const DetailPage: NextPage<{}> = props => {
             people
           }
           chart(petitionId: $no) {
-            hk
-            rk
+            no
+            at
             people
-            ttl
           }
         }
       `, {no: Number(no)}).then(({petition, chart}) => {
@@ -117,12 +117,7 @@ export const DetailPage: NextPage<{}> = props => {
 export default DetailPage
 
 type Data = {
-  chart: {
-    hk: number
-    rk: string
-    people: number
-    ttl: number
-  }[]
+  chart: PetitionTick[]
   title: string
   people: number
   remains: string

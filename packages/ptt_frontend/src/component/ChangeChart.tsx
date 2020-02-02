@@ -1,5 +1,6 @@
 import {FunctionComponent, useEffect, useRef, useState} from 'react'
 import {const_colors} from '../constant'
+import {PetitionTick} from '@deptno/ptt_graphql'
 
 declare const Chart, moment
 
@@ -112,6 +113,8 @@ export const ChangeChart: FunctionComponent<Props> = props => {
   useEffect(() => {
     if (chart) {
       if (items.length > 0) {
+        alert(JSON.stringify(items[0], null, 2))
+        alert(JSON.stringify(createChartData(items)[0], null, 2))
         chart.data.datasets[0].data = createChartData(items)
         chart.update()
       }
@@ -121,11 +124,11 @@ export const ChangeChart: FunctionComponent<Props> = props => {
   return <canvas ref={ref} id="change-chart" width="400" height="200"/>
 }
 
-const createChartData = (items) => items
+const createChartData = (items: PetitionTick[]) => items
   .map(t => {
     return {
+      x: t.at,
       y: t.people,
-      x: new Date(t.rk.slice(3))
     }
   })
   .map((x, i, array) => {
@@ -137,5 +140,5 @@ const createChartData = (items) => items
   .slice(1)
 
 type Props = {
-  items: any[]
+  items: PetitionTick[]
 }

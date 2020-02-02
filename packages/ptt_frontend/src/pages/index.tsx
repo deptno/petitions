@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {graphql} from '../lib/graphql'
 import {Header} from '../component/Header'
 import {useEffect, useState} from 'react'
+import {Petition} from '@deptno/ptt_graphql'
 
 export const IndexPage: NextPage<{}> = props => {
   const [petitions, setPetitions] = useState<Data>([])
@@ -81,14 +82,4 @@ export const IndexPage: NextPage<{}> = props => {
 
 export default IndexPage
 
-type Data = {
-  no: number
-  hk: number
-  endDate: string
-  remains: string
-  category: string
-  people: number
-  ttl: number
-  rk: string
-  title: string
-}[]
+type Data = Petition[]

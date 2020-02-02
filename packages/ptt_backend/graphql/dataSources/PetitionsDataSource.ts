@@ -74,7 +74,7 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
 
   async chart(petitionId: number) {
     return this.ddb
-      .query<PetitionTick>({
+      .query<DPetitionTick>({
         TableName                : 'dev-petitions',
         KeyConditionExpression   : '#h = :h AND begins_with(#r, :r)',
         ExpressionAttributeNames : {
@@ -87,9 +87,27 @@ export class PetitionsDataSource extends DataSource implements PetitionsDataSour
         },
       })
       .then(response => {
-        return response.items
+        return response.items.map<PetitionTick>(t => {
+          console.log({
+            no: t.hk,
+            people: t.people,
+            at: new Date(t.rk.slice(3)),
+          })
+          return {
+            no: t.hk,
+            people: t.people,
+            at: new Date(t.rk.slice(3)),
+          }
+        })
       })
   }
 }
 
 const comma = Intl.NumberFormat('ko-KR').format
+
+type DPetitionTick = {
+  hk: number
+  rk: string
+  people: number
+  ttl: number
+}

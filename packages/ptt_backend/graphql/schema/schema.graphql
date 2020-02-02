@@ -18,8 +18,9 @@ type Petition {
   title: String!
 }
 type PetitionTick {
-  hk: Int!
-  rk: String!
+  no: Int!
   people: Int!
-  ttl: Int!
+  at: Date!
 }
+
+scalar Date

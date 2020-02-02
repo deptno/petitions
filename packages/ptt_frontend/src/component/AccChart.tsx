@@ -1,5 +1,6 @@
 import {FunctionComponent, useEffect, useRef, useState} from 'react'
 import {const_colors} from '../constant'
+import {PetitionTick} from '@deptno/ptt_graphql'
 
 declare const Chart, moment
 
@@ -126,11 +127,11 @@ const createChartData = items => items
   .map(t => {
     return {
       y: t.people,
-      x: new Date(t.rk.slice(3))
+      x: t.at,
     }
   })
   .slice(1)
 
 type Props = {
-  items: any[]
+  items: PetitionTick[]
 }
