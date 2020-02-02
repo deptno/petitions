@@ -2,7 +2,7 @@ import {FunctionComponent, useEffect, useRef} from 'react'
 
 declare const Chart, moment
 
-export const ChangeChart: FunctionComponent<Props> = props => {
+export const AccChart: FunctionComponent<Props> = props => {
   const ref = useRef<HTMLCanvasElement>()
   const {items} = props
 
@@ -26,20 +26,15 @@ export const ChangeChart: FunctionComponent<Props> = props => {
           y: t.people,
           x: new Date(t.rk.slice(3))
         }
-      })
+      }).slice(1)
       const chart = new Chart(ctx, {
         data   : {
           datasets: [
             {
               label          : '',
-              data           : data.map((x, i, array) => {
-                return {
-                  x: x.x,
-                  y: (x.y - ((array[i - 1]?.y) || x.y)),
-                }
-              }).slice(1),
-              backgroundColor: color(chartColors.green).alpha(0.5).rgbString(),
-              borderColor    : chartColors.green,
+              data           : data,
+              backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
+              borderColor    : chartColors.blue,
               type           : 'bar',
               pointRadius    : 0,
               fill           : false,
@@ -105,7 +100,7 @@ export const ChangeChart: FunctionComponent<Props> = props => {
                 display: false,
               },
               gridLines : {
-                drawBorder: true
+                drawBorder: false
               },
               scaleLabel: {
                 labelString: '청원수'
@@ -129,7 +124,7 @@ export const ChangeChart: FunctionComponent<Props> = props => {
     }
   }, [])
 
-  return <canvas ref={ref} id="change-chart" width="400" height="200"/>
+  return <canvas ref={ref} id="acc-chart" width="400" height="200"/>
 }
 
 type Props = {
