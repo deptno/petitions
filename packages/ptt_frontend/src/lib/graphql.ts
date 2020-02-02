@@ -2,7 +2,6 @@ import fetch from 'cross-fetch'
 import {const_graphql_url} from '../constant'
 
 export const graphql = (query: string, variables?: any) => {
-  console.log({query})
   return fetch(
     const_graphql_url,
     {

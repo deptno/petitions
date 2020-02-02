@@ -1,9 +1,11 @@
-import {FunctionComponent, useEffect, useRef} from 'react'
+import {FunctionComponent, useEffect, useRef, useState} from 'react'
+import {const_colors} from '../constant'
 
 declare const Chart, moment
 
 export const ChangeChart: FunctionComponent<Props> = props => {
   const ref = useRef<HTMLCanvasElement>()
+  const [chart, setChart] = useState()
   const {items} = props
 
   useEffect(() => {
@@ -11,35 +13,15 @@ export const ChangeChart: FunctionComponent<Props> = props => {
 
     if (canvas) {
       const ctx = canvas.getContext('2d')
-      const chartColors = {
-        red   : 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green : 'rgb(75, 192, 192)',
-        blue  : 'rgb(54, 162, 235)',
-        purple: 'rgb(153, 102, 255)',
-        grey  : 'rgb(201, 203, 207)',
-      }
       const color = Chart.helpers.color
-      const data = items.map(t => {
-        return {
-          y: t.people,
-          x: new Date(t.rk.slice(3))
-        }
-      })
       const chart = new Chart(ctx, {
         data   : {
           datasets: [
             {
               label          : '',
-              data           : data.map((x, i, array) => {
-                return {
-                  x: x.x,
-                  y: (x.y - ((array[i - 1]?.y) || x.y)),
-                }
-              }).slice(1),
-              backgroundColor: color(chartColors.green).alpha(0.5).rgbString(),
-              borderColor    : chartColors.green,
+              data           : createChartData(items),
+              backgroundColor: color(const_colors.green).alpha(0.5).rgbString(),
+              borderColor    : const_colors.green,
               type           : 'bar',
               pointRadius    : 0,
               fill           : false,
@@ -48,9 +30,6 @@ export const ChangeChart: FunctionComponent<Props> = props => {
             }]
         },
         options: {
-          animation: {
-            duration: 3000
-          },
           scales   : {
             xAxes: [{
               type        : 'time',
@@ -59,8 +38,8 @@ export const ChangeChart: FunctionComponent<Props> = props => {
                 tooltipFormat : 'MM/DD HH:mm',
                 displayFormats: {
                   month: '📆 MM/DD',
-                  hour: 'HH:mm',
-                  day : 'MM/DD'
+                  hour : 'HH:mm',
+                  day  : 'MM/DD'
                 }
               },
               offset      : true,
@@ -101,7 +80,7 @@ export const ChangeChart: FunctionComponent<Props> = props => {
               }
             }],
             yAxes: [{
-              ticks: {
+              ticks     : {
                 display: false,
               },
               gridLines : {
@@ -126,11 +105,36 @@ export const ChangeChart: FunctionComponent<Props> = props => {
           }
         }
       })
+
+      setChart(chart)
     }
   }, [])
+  useEffect(() => {
+    if (chart) {
+      if (items.length > 0) {
+        chart.data.datasets[0].data = createChartData(items)
+        chart.update()
+      }
+    }
+  }, [chart, items])
 
   return <canvas ref={ref} id="change-chart" width="400" height="200"/>
 }
+
+const createChartData = (items) => items
+  .map(t => {
+    return {
+      y: t.people,
+      x: new Date(t.rk.slice(3))
+    }
+  })
+  .map((x, i, array) => {
+    return {
+      x: x.x,
+      y: (x.y - ((array[i - 1]?.y) || x.y)),
+    }
+  })
+  .slice(1)
 
 type Props = {
   items: any[]

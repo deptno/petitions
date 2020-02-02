@@ -3,9 +3,26 @@ import Head from 'next/head'
 import Link from 'next/link'
 import {graphql} from '../lib/graphql'
 import {Header} from '../component/Header'
+import {useEffect, useState} from 'react'
 
-export const IndexPage: NextPage<Props> = props => {
-  const {items} = props
+export const IndexPage: NextPage<{}> = props => {
+  const [petitions, setPetitions] = useState<Data>([])
+
+  useEffect(() => {
+    graphql(/* language=graphql */ `
+      query {
+        petitions {
+          category
+          remains
+          no
+          title
+          people
+        }
+      }
+    `)
+      .then(response => response.petitions)
+      .then(setPetitions)
+  }, [])
 
   return (
     <div className="page ml-auto mr-auto">
@@ -38,7 +55,7 @@ export const IndexPage: NextPage<Props> = props => {
           국민 청원
         </h1>
         <ul className="list pl0">
-          {items.map((t, i) => {
+          {petitions.map((t, i) => {
             return (
               <Link href="detail/[no]" as={`detail/${t.no}`} key={t.no}>
                 <a className="link black-70">
@@ -61,37 +78,17 @@ export const IndexPage: NextPage<Props> = props => {
     </div>
   )
 }
-IndexPage.getInitialProps = async (ctx) => {
-  const {petitions} = await graphql(/* language=graphql */ `
-    query {
-      petitions {
-        category
-        remains
-        no
-        title
-        people
-      }
-    }
-  `)
-  console.log(petitions)
-  console.table(petitions)
 
-  return {
-    items: petitions
-  }
-}
 export default IndexPage
 
-type Props = {
-  items: {
-    no: number
-    hk: number
-    endDate: string
-    remains: string
-    category: string
-    people: number
-    ttl: number
-    rk: string
-    title: string
-  }[]
-}
+type Data = {
+  no: number
+  hk: number
+  endDate: string
+  remains: string
+  category: string
+  people: number
+  ttl: number
+  rk: string
+  title: string
+}[]

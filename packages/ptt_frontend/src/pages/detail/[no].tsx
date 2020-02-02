@@ -3,14 +3,51 @@ import Head from 'next/head'
 import {Script} from 'react-script-fall'
 import {graphql} from '../../lib/graphql'
 import {ChangeChart} from '../../component/ChangeChart'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Header} from '../../component/Header'
 import {AccChart} from '../../component/AccChart'
 import Link from 'next/link'
+import {useRouter} from 'next/router'
 
-export const DetailPage: NextPage<Props> = props => {
+export const DetailPage: NextPage<{}> = props => {
   const [chartLoaded, setChartLoaded] = useState(false)
-  const {no, title, people, remains, endDate, items} = props
+  const [data, setData] = useState({
+    title: '불러 오는 중',
+    endDate: '-',
+    remains: '-',
+    people: 0,
+    chart: [],
+  } as Data)
+  const {title, people, remains, endDate, chart} = data
+  const {query: {no}} = useRouter()
+
+  useEffect(() => {
+    if (no) {
+      graphql(/* language=graphql */ `
+        query ($no: Int!) {
+          petition(id: $no) {
+            category
+            remains
+            endDate
+            no
+            title
+            people
+          }
+          chart(petitionId: $no) {
+            hk
+            rk
+            people
+            ttl
+          }
+        }
+      `, {no: Number(no)}).then(({petition, chart}) => {
+        const {title, people, remains, endDate} = petition
+
+        setData({title, people, remains, endDate, chart})
+      })
+    }
+  }, [no])
+
 
   return (
     <div className="page ml-auto mr-auto">
@@ -50,11 +87,11 @@ export const DetailPage: NextPage<Props> = props => {
           <div className="flex flex-column">
             <div>
               <h5 className="mv3">변화율</h5>
-              <ChangeChart items={items}/>
+              <ChangeChart items={chart}/>
             </div>
             <div>
               <h5 className="mv3">누적</h5>
-              <AccChart items={items}/>
+              <AccChart items={chart}/>
             </div>
           </div>
         )}
@@ -78,46 +115,16 @@ export const DetailPage: NextPage<Props> = props => {
     </div>
   )
 }
-DetailPage.getInitialProps = async (ctx) => {
-  const {no} = ctx.query as { [key: string]: string }
-  const {petition: {title, people, remains, endDate}, chart: items} = await graphql(/* language=graphql */ `
-    query ($no: Int!){
-      petition(id: $no) {
-        category
-        remains
-        endDate
-        no
-        title
-        people
-      }
-      chart(petitionId: $no) {
-        hk
-        rk
-        people
-        ttl
-      }
-    }
-  `, {no: Number(no)})
 
-  return {
-    items,
-    no,
-    title,
-    people,
-    remains,
-    endDate
-  }
-}
 export default DetailPage
 
-type Props = {
-  items: {
+type Data = {
+  chart: {
     hk: number
     rk: string
     people: number
     ttl: number
   }[]
-  no: string
   title: string
   people: number
   remains: string
