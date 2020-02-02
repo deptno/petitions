@@ -60,3 +60,6 @@ functions:
       - http:
           path: /graphql
           method: post
+          cors:
+            origin: '*'
+            maxAge: 86400
