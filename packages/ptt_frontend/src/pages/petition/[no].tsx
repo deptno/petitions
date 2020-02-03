@@ -1,15 +1,15 @@
 import {NextPage} from 'next'
 import Head from 'next/head'
 import {Script} from 'react-script-fall'
-import {graphql} from '../../../lib/graphql'
-import {ChangeChart} from '../../../component/ChangeChart'
+import {graphql} from '../../lib/graphql'
+import {ChangeChart} from '../../component/ChangeChart'
 import React, {useEffect, useState} from 'react'
-import {Header} from '../../../component/Header'
-import {AccChart} from '../../../component/AccChart'
+import {Header} from '../../component/Header'
+import {AccChart} from '../../component/AccChart'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {PetitionTick} from '@deptno/ptt_graphql'
-import {Footer} from '../../../component/Footer'
+import {Footer} from '../../component/Footer'
 import {NextSeo} from 'next-seo'
 
 export const DetailPage: NextPage<{}> = props => {
@@ -50,15 +50,14 @@ export const DetailPage: NextPage<{}> = props => {
     }
   }, [no])
 
-
   return (
     <div className="page ml-auto mr-auto">
       <NextSeo
-        title="Using More of Config"
-        description="This example uses more of the available config options."
-        canonical="https://www.canonical.ie/"
+        title="청와대 국민청원 차트"
+        description="비공식 국민청원 순위 차트"
+        canonical="https://deptno.github.io/petitions/"
         openGraph={{
-          url: 'https://deptno.github.io/',
+          url: 'https://deptno.github.io/petitions/',
           title: '청와대 국민청원 차트',
           description: '청와대 국민청원 순위 차트, 그래프',
           images: [
