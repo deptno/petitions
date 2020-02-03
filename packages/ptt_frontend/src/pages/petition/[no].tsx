@@ -10,7 +10,6 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {PetitionTick} from '@deptno/ptt_graphql'
 import {Footer} from '../../component/Footer'
-import {NextSeo} from 'next-seo'
 
 export const DetailPage: NextPage<{}> = props => {
   const [chartLoaded, setChartLoaded] = useState(false)
@@ -52,25 +51,6 @@ export const DetailPage: NextPage<{}> = props => {
 
   return (
     <div className="page ml-auto mr-auto">
-      <NextSeo
-        title="청와대 국민청원 차트"
-        description="비공식 국민청원 순위 차트"
-        canonical="https://deptno.github.io/petitions/"
-        openGraph={{
-          url: 'https://deptno.github.io/petitions/',
-          title: '청와대 국민청원 차트',
-          description: '청와대 국민청원 순위 차트, 그래프',
-          images: [
-            { url: 'https://deptno.github.io/petitions/logo.png' },
-          ],
-          site_name: '청와대 국민청원 차트',
-        }}
-        twitter={{
-          handle: '@deptno',
-          site: '@deptno',
-          cardType: 'summary_large_image',
-        }}
-      />
       <style jsx>
         {/* language=css */ `
             .page {
