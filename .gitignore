@@ -1,3 +1,6 @@
 node_modules/
 .idea/
 .terraform/
+.next
+out
+packages/ptt_graphql/graphql.ts
