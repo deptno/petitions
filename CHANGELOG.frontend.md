@@ -1,5 +1,9 @@
 ### 2020.02.03
 - 로고(workaround: export 시 assetPrefix 이슈)
+- basePath 적용(루트가 밖으로 튀는 이슈)
+- SEO 관련 위치가 디테일 페이지에 있던 이슈 수정
+- .editorconfig 추가
+- .gitignore 업데이트
 ### 2020.02.02
 - 배포
 - SSR -> CSR
