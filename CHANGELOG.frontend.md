@@ -1,3 +1,5 @@
+### 2020.02.06
+- 
 ### 2020.02.03
 - 로고(workaround: export 시 assetPrefix 이슈)
 - basePath 적용(루트가 밖으로 튀는 이슈)
