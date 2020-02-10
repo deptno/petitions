@@ -1,7 +1,7 @@
 export enum Node {
   ELEMENT_NODE = 1
 }
-type PetitionsDocument = {
+export type PetitionsDocument = {
   hk: number
   rk: string
   ttl: number

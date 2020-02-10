@@ -1,13 +1,13 @@
 import {format} from 'date-fns'
 import {util} from '@deptno/dynamodb'
-import {const_yyyyMMDdTHHMmxx} from './constant'
+import {const_ddb_table, const_yyyyMMDdTHHMmxx} from './constant'
 import {AccDocument, AtDocument} from './type'
 import {createRowParser} from './parser/createRowParser'
 import {createAccDocument} from './entity/createAccDocument'
 import {createAtDocument} from './entity/createAtDocument'
 import {getRows} from './parser/getRows'
 import {getBestPetitionsHtml} from './getBestPetitionsHtml'
-import {batchWrite} from './dynamodb/batchWrite'
+import {ddb} from './dynamodb'
 
 export const petitions = async () => {
   try {
@@ -23,10 +23,13 @@ export const petitions = async () => {
       .filter(a => a.ttl - util.ttl(now) > 0)
     const at: AtDocument[] = acc.map(createAtDocument(nowX))
 
-    return batchWrite([
-      ...acc,
-      ...at,
-    ])
+    return ddb.batchWrite({
+      tableName: const_ddb_table,
+      items: [
+        ...acc,
+        ...at,
+      ]
+    })
   } catch (e) {
     console.error('error', e)
   }
