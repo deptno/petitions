@@ -1,6 +1,7 @@
 node_modules/
 .idea/
 .terraform/
-.next
+.next/
+.serverless/
 out
 packages/ptt_graphql/graphql.ts
