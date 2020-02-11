@@ -54,6 +54,7 @@ functions:
   graphql:
     description: petitions GraphQL
     handler: handler/graphql.handler
+    memorySize: 192
     environment:
       TZ: Asia/Seoul
     events:

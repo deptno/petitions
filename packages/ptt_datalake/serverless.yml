@@ -71,4 +71,4 @@ functions:
       - schedule:
           name: ${opt:stage}-cron-ptt-archive
           description: '매일 청원 데이터를 파일로 아카이브'
-          rate: cron(50 15 * * ? *)
+          rate: cron(50 14 * * ? *)
