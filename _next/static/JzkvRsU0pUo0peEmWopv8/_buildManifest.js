@@ -1,0 +1,1 @@
+self.__BUILD_MANIFEST = (function(a){return {"/":[a],"/index":[a],"/petition/[no]":[a]}}("static\u002Fchunks\u002F205a999878e207b6190332836d21f19cea259a7a.69d1ee49aa62fa3eeefe.js"));self.__BUILD_MANIFEST_CB && self.__BUILD_MANIFEST_CB()
