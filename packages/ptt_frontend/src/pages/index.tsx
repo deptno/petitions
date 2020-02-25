@@ -7,6 +7,8 @@ import React, {useEffect, useState} from 'react'
 import {Petition} from '@deptno/ptt_graphql'
 import {Footer} from '../component/Footer'
 import {NextSeo} from 'next-seo'
+import {Gtag} from '../component/Gtag'
+import {const_google_analytics_id} from '../constant'
 
 export const IndexPage: NextPage<{}> = props => {
   const [petitions, setPetitions] = useState<Data>([])
@@ -70,6 +72,7 @@ export const IndexPage: NextPage<{}> = props => {
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.11.1/tachyons.min.css"
         />
+        <Gtag id={const_google_analytics_id}/>
       </Head>
       <Header/>
       <div className="ph3">

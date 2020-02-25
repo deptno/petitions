@@ -8,3 +8,4 @@ export const const_colors = {
   purple: 'rgb(153, 102, 255)',
   grey  : 'rgb(201, 203, 207)',
 }
+export const const_google_analytics_id = process.env.GOOGLE_ANALYTICS_ID!
